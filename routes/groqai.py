@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from extensions import db
 from models import Prompt
-from utils.openai_service import ask_groq 
+from utils.groqai_service import ask_groq 
 
 Prompt_bp = Blueprint('groqai_prompt', __name__)
 
