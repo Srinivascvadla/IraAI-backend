@@ -32,9 +32,12 @@ jwt = JWTManager(app)
 
 from routes.auth import auth_bp
 from routes.openai import Prompt_bp
+from routes.groqai import Prompt_bp as GroqPrompt_bp
+
 
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(Prompt_bp, url_prefix='/iraai')
+app.register_blueprint(GroqPrompt_bp, url_prefix='/groqai')
 
 with app.app_context():
     # Create all database tables

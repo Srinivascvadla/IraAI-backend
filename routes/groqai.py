@@ -2,9 +2,10 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from extensions import db
 from models import Prompt
-from utils.openai_service import ask_mistral
+from utils.openai_service import ask_groq 
 
-Prompt_bp = Blueprint('openai_prompt', __name__)
+Prompt_bp = Blueprint('groqai_prompt', __name__)
+
 @Prompt_bp.route('/prompt', methods=['POST'])
 @jwt_required()
 def create_prompt():
@@ -18,8 +19,8 @@ def create_prompt():
     # Create a new prompt
     new_prompt = Prompt(user_id=user_id, prompt=prompt_text)
     
-    # Get response from Mistral
-    response_text = ask_mistral(prompt_text)
+    # Get response from Groq AI
+    response_text = ask_groq(prompt_text)
     new_prompt.response = response_text
 
     db.session.add(new_prompt)
@@ -59,7 +60,7 @@ def update_prompt(prompt_id):
     prompt_text = data.get('prompt')
     if prompt_text:
         prompt.prompt = prompt_text
-        prompt.response = ask_mistral(prompt_text)
+        prompt.response = ask_groq(prompt_text)  # Use Groq AI for update
 
     db.session.commit()
 
