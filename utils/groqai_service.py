@@ -1,18 +1,12 @@
-import os
-from dotenv import load_dotenv
 from groq import Groq
+import os
 
-client = Groq(
-    api_key=os.environ.get("GROQ_API_KEY"),
-)
-# Load environment variables from .env file
-load_dotenv()
-
-def ask_groq(prompt):
-    response = client.chat.complete(
-        model="llama-3.3-70b-versatile",
+def ask_groq(prompt_text):
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    response = client.chat.completions.create(
+        model="qwen/qwen3-32b",  # or your preferred model
         messages=[
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": prompt_text}
         ]
     )
     return response.choices[0].message.content
